@@ -1,0 +1,24 @@
+{
+  "name": "transport",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx @tailwindcss/cli -i ./static/css/input.css -o ./static/css/dist.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shazkhan2/django.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shazkhan2/django/issues"
+  },
+  "homepage": "https://github.com/shazkhan2/django#readme",
+  "description": "",
+  "devDependencies": {
+    "tailwindcss": "^4.2.2"
+  }
+}

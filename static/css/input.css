@@ -1,0 +1,7 @@
+/* static/css/input.css */
+@import "tailwindcss";
+
+/* This tells Tailwind: Go up two levels, then look in every folder 
+   for a 'templates' folder and scan every .html file inside them */
+@source "../../**/templates/**/*.html";
+@source "../../templates/**/*.html";
