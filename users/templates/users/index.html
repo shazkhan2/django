@@ -2,15 +2,25 @@
 
 {% block content %}
 
-<div>
-    <h1 class="text-4xl font-bold text-blue-600">Users</h1>
-    <p class="p-4 bg-red-100 text-red-800 rounded shadow">
-        This is the page where you can manage users. You can add, edit, or delete users from this page.
-    </p>
+<div class="flex justify-center items-center w-full min-h-screen">
+    <div class="w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4">Login</h1>
+  <form method = "POST" action = "{% url 'index' %}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    {% csrf_token %}
+    <div class="mb-4">
+      
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none  " name="username" id="username" type="text" placeholder="Username">
     </div>
-    <div class="hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer">
-    <p class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-red-500 font-black">
-        Gradient Text!
-    </p>
+    <div class="mb-6">
+    <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight " name = "password" id="password" type="password" placeholder="******************">
+    </div>
+    <div class="flex flex-row items-center justify-center ">
+      <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none   cursor-pointer" type="submit" >
+        Sign In
+      </button>
+    </div>
+  </form>
+</div>
+
 </div>
 {% endblock %}
