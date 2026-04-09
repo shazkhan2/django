@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/dist.css' %}">
     <title>Transport Project</title>
 </head>
-<body class="bg-gray-50">
+<body class="flex flex-col min-h-screen">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
 <nav class="relative bg-gray-800">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -76,8 +76,17 @@
     </div>
   </el-disclosure>
 </nav>
+{% if messages %}
+{% for message in messages %} 
+{{ message }}
+
+{% endfor %}
+{% endif %}
+<main class = "flex-grow">
     {% block content %}
     {% endblock %}
+</main>
+
     <footer class="bg-gray-800 text-white p-6">
         <div class="mx-auto max-w-7xl text-center">
             <div class="max-w-7xl">

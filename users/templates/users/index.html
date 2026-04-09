@@ -2,17 +2,32 @@
 
 {% block content %}
 
-<div class="flex justify-center items-center w-full min-h-screen">
+{% if user.is_authenticated %}
+
+<div class="flex flex-col items-center justify-center w-full ">
+    <h1 class="text-3xl font-bold mb-4">Welcome, {{ user.username }}!</h1>
+    <p class="text-lg mb-6">You are logged in.</p>
+    <form method = "POST" action = "{% url 'logout_user' %}">
+        {% csrf_token %}
+    <button class = "bg-red-500 rounded-md px-4 py-2 text-white font-bold hover:bg-red-400 cursor-pointer" type="submit">
+        Logout
+
+    </button>
+    </form>
+</div>
+{% else %}
+
+<div class="flex justify-center items-center w-full">
     <div class="w-full max-w-md">
     <h1 class="text-2xl font-bold mb-4">Login</h1>
   <form method = "POST" action = "{% url 'index' %}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     {% csrf_token %}
     <div class="mb-4">
       
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none  " name="username" id="username" type="text" placeholder="Username">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none  " name="username" id="username" type="text" placeholder="Username" required>
     </div>
     <div class="mb-6">
-    <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight " name = "password" id="password" type="password" placeholder="******************">
+    <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight " name = "password" id="password" type="password" placeholder="******************" required>
     </div>
     <div class="flex flex-row items-center justify-center ">
       <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none   cursor-pointer" type="submit" >
@@ -23,4 +38,5 @@
 </div>
 
 </div>
+{% endif %}
 {% endblock %}
