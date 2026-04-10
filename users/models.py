@@ -8,4 +8,8 @@ class User(AbstractUser):
         ('driver', 'Driver'),
     )
 
-    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES)
+    user_type = models.CharField(
+        max_length=20, 
+        choices=USER_TYPE_CHOICES,
+        blank=True,
+        null=True)
