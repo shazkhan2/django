@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm
+from django.contrib.auth.models import Group
 
 def index(request):
     if request.method == "POST":
@@ -33,6 +34,8 @@ def register_user(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
+            user=form.save(commit=False)
+            user.user_type = 'dispatcher'
             form.save()
             username= form.cleaned_data['username']
             password= form.cleaned_data['password1']
@@ -45,4 +48,6 @@ def register_user(request):
     return render(request, 'users/register.html', {
         'form': form
             })
+    
+    
             
