@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<h1>Assign driver</h1>
+<form method="post">
+{% csrf_token %}
+<select name="driver">
+    {% for driver in drivers %}
+    <option value="{{driver.id}}">
+        {{driver.username}}
+        
+    </option>
+    {% endfor %}
+</select>
+<button type="submit">Assign</button>
+
+</form>
+
+
+{% endblock %}

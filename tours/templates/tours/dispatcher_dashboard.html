@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto mt-8">
+
+  <h1 class="text-2xl font-bold mb-6">Dispatcher Dashboard</h1>
+
+  <div class="mb-6 text-right">
+    <a href="{% url 'tours:create_tour' %}"
+       class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+       + Create Tour
+    </a>
+  </div>
+
+  <div class="bg-white shadow rounded p-4">
+    {% for tour in tours %}
+      <div class="border-b py-2">
+        <p><strong>{{ tour.passenger_name }}</strong></p>
+        <p>{{ tour.pickup_location }} → {{ tour.dropoff_location }}</p>
+        <p class="text-sm text-gray-500">Status: {{ tour.status }}</p>
+      </div>
+    {% empty %}
+      <p>No tours yet.</p>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}

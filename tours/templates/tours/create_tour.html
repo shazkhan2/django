@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<h2>Create Tour</h2>
+
+<form method="post">
+  {% csrf_token %}
+
+  {% for field in form %}
+    <div class="mb-4">
+      {{ field }}
+      {% for error in field.errors %}
+        <p class="text-red-500 text-sm">{{ error }}</p>
+      {% endfor %}
+    </div>
+  {% endfor %}
+
+  <button type="submit">Create</button>
+</form>
+
+
+
+{% endblock %}

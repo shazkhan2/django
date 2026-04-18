@@ -35,7 +35,7 @@ def register_user(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user=form.save(commit=False)
-            user.user_type = 'dispatcher'
+            user.user_type = 'driver'
             form.save()
             username= form.cleaned_data['username']
             password= form.cleaned_data['password1']

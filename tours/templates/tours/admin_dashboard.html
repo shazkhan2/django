@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-6xl mx-auto mt-8">
+
+  <h1 class="text-2xl font-bold mb-6 text-center">Admin Dashboard</h1>
+
+  <div class="bg-white shadow rounded p-4">
+
+    {% if tours %}
+    
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-100 text-left">
+            <th class="p-2">Passenger</th>
+            <th class="p-2">Route</th>
+            <th class="p-2">Pickup Time</th>
+            <th class="p-2">Driver</th>
+            <th class="p-2">Status</th>
+            <th class="p-2">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for tour in tours %}
+          <tr class="border-b">
+
+            <!-- Passenger -->
+            <td class="p-2">
+              {{ tour.passenger_name }}
+            </td>
+
+            <!-- Route -->
+            <td class="p-2">
+              {{ tour.pickup_location }} → {{ tour.dropoff_location }}
+            </td>
+
+            <!-- Pickup -->
+            <td class="p-2">
+              {{ tour.pickup_time }}
+            </td>
+
+            <!-- Driver -->
+            <td class="p-2">
+              {% if tour.driver %}
+                {{ tour.driver.username }}
+              {% else %}
+                <span class="text-gray-400">Unassigned</span>
+              {% endif %}
+            </td>
+
+            <!-- Status -->
+            <td class="p-2">
+              <span class="
+                {% if tour.status == 'pending' %} text-yellow-600
+                {% elif tour.status == 'assigned' %} text-blue-600
+                {% elif tour.status == 'completed' %} text-green-600
+                {% endif %}
+              ">
+                {{ tour.status|capfirst }}
+              </span>
+            </td>
+
+            <!-- Action -->
+            <td class="p-2">
+              {% if not tour.driver %}
+                <a href="{% url 'assign_driver' tour.id %}"
+                   class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                   Assign
+                </a>
+              {% else %}
+                <span class="text-gray-400 text-sm">Assigned</span>
+              {% endif %}
+            </td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    {% else %}
+      <p class="text-center text-gray-500">No tours available.</p>
+    {% endif %}
+
+  </div>
+
+</div>
+
+{% endblock %}

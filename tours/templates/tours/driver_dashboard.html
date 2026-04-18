@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto mt-8">
+
+  <h1 class="text-2xl font-bold mb-6 text-center">Driver Dashboard</h1>
+
+  <div class="bg-white shadow rounded p-4">
+
+    {% if tours %}
+
+      <div class="space-y-4">
+
+        {% for tour in tours %}
+          <div class="border p-4 rounded">
+
+            <div class="flex justify-between items-center">
+
+              <!-- LEFT INFO -->
+              <div>
+                <p class="font-semibold">
+                  {{ tour.passenger_name }}
+                </p>
+
+                <p class="text-sm text-gray-600">
+                  {{ tour.pickup_location }} → {{ tour.dropoff_location }}
+                </p>
+
+                <p class="text-sm text-gray-500">
+                  Pickup: {{ tour.pickup_time }}
+                </p>
+
+                <p class="text-sm">
+                  Status:
+                  <span class="
+                    {% if tour.status == 'assigned' %}text-blue-600
+                    {% elif tour.status == 'completed' %}text-green-600
+                    {% endif %}
+                  ">
+                    {{ tour.status|capfirst }}
+                  </span>
+                </p>
+              </div>
+
+              <!-- RIGHT ACTION -->
+              <div>
+
+                {% if tour.status != "completed" %}
+                  <a href="{% url 'complete_tour' tour.id %}"
+                     class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+                    Complete
+                  </a>
+                {% else %}
+                  <span class="text-green-600 font-semibold">Completed ✔</span>
+                {% endif %}
+
+              </div>
+
+            </div>
+
+          </div>
+        {% endfor %}
+
+      </div>
+
+    {% else %}
+      <p class="text-center text-gray-500">
+        No assigned tours.
+      </p>
+    {% endif %}
+
+  </div>
+
+</div>
+
+{% endblock %}

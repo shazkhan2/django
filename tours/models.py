@@ -3,8 +3,13 @@ from django.conf import settings
 
 User = settings.AUTH_USER_MODEL
 
-class Tours(models.Model):   
-    assigned_by = models.ForeignKey(
+class Tour(models.Model):   
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('assigned', 'Assigned'),
+        ('completed', 'Completed'),
+    )
+    created_by = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
         null=True,
@@ -25,6 +30,12 @@ class Tours(models.Model):
     pickup_location = models.CharField(max_length=255)
     dropoff_location = models.CharField(max_length=255)
     dropoff_time = models.DateTimeField()
+    
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='pending'
+    )
 
 
     def __str__(self):
