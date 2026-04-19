@@ -47,7 +47,7 @@
               <div>
 
                 {% if tour.status != "completed" %}
-                  <a href="{% url 'complete_tour' tour.id %}"
+                  <a href="{% url 'tours:complete_tour' tour.id %}"
                      class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
                     Complete
                   </a>

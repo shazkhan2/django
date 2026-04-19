@@ -66,7 +66,7 @@ def dispatcher_dashboard(request):
 def driver_dashboard(request):
     tours = Tour.objects.filter(driver=request.user)
 
-    return render(request, 'tours/driver.html', {
+    return render(request, 'tours/driver_dashboard.html', {
         'tours': tours
     })
 
@@ -80,7 +80,7 @@ def driver_dashboard(request):
 def admin_dashboard(request):
     tours = Tour.objects.all().order_by('-pickup_time')
 
-    return render(request, 'tours/admin.html', {
+    return render(request, 'tours/admin_dashboard.html', {
         'tours': tours
     })
 
@@ -97,7 +97,6 @@ def create_tour(request):
 
         if form.is_valid():
             tour = form.save(commit=False)
-            tour.created_by = request.user
             tour.save()
 
             return redirect('tours:dispatcher_dashboard')

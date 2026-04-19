@@ -1,16 +1,11 @@
-# tours/forms.py
 from django import forms
 from .models import Tour
-
-# class TourForm(forms.ModelForm):
-#     class Meta:
-#         model = Tour
-#         exclude = ['assigned_by', 'driver', 'status']
 
 class TourForm(forms.ModelForm):
     class Meta:
         model = Tour
-        fields = '__all__'
+        exclude = ['assigned_by', 'driver', 'status']
+        # fields = '__all__'
 
         widgets = {
             'pickup_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
