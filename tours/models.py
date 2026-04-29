@@ -29,7 +29,6 @@ class Tour(models.Model):
     pickup_time = models.DateTimeField()
     pickup_location = models.CharField(max_length=255)
     dropoff_location = models.CharField(max_length=255)
-    dropoff_time = models.DateTimeField()
     
     status = models.CharField(
         max_length=20,
@@ -37,6 +36,5 @@ class Tour(models.Model):
         default='pending'
     )
 
-
     def __str__(self):
-        return self.passenger_name
+        return f"{self.passenger_name} ({self.status})"
