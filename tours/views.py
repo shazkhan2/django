@@ -79,3 +79,21 @@ def complete_tour(request, tour_id):
         tour.status = 'completed'
         tour.save()
     return redirect('tours:driver_dashboard')
+
+@login_required
+@user_passes_test(is_admin, login_url='/')
+def delete_tour(request, tour_id):
+    tour = get_object_or_404(Tour, id=tour_id)
+    tour.delete()
+    return redirect('tours:admin_dashboard')
+
+@login_required
+@user_passes_test(is_admin, login_url='/')
+def update_tour_status(request, tour_id):
+    tour=get_object_or_404(Tour, id=tour_id)
+    if request.method=="POST":
+        new_status=request.POST.get('status')
+        if new_status in dict(Tour.STATUS_CHOICES):
+            tour.status=new_status
+            tour.save()
+    return redirect('tours:admin_dashboard')
