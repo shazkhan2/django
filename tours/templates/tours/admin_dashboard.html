@@ -59,16 +59,17 @@
                             {{ tour.pickup_time|time:"H:i" }}
                         </td>
                         <td class="px-6 py-4 text-sm">
-                            {% if tour.driver %}
-                            <div class="flex items-center gap-2">
-                                <span class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold">
-                                    {{ tour.driver.first_name|first }}{{ tour.driver.last_name|first }}
-                                </span>
-                                <span>{{ tour.driver.get_full_name }}</span>
-                            </div>
-                            {% else %}
-                            <a href="{% url 'tours:assign_driver' tour.id %}" class="text-blue-600 hover:underline font-medium text-xs">Assign Driver</a>
-                            {% endif %}
+                            <form action="{% url 'tours:assign_driver' tour.id %}" method="post" class="flex items-center gap-2">
+                                {% csrf_token %}
+                                <select name="driver" onchange="this.form.submit()" class="text-[11px] font-bold uppercase tracking-widest border border-gray-200 rounded px-2 py-1 bg-white focus:ring-1 focus:ring-black focus:outline-none cursor-pointer">
+                                    <option value="" disabled {% if not tour.driver %}selected{% endif %}>Assign Driver</option>
+                                    {% for driver in drivers %}
+                                    <option value="{{ driver.id }}" {% if tour.driver.id == driver.id %}selected{% endif %}>
+                                        {{ driver.get_full_name|default:driver.username }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </form>
                         </td>
                         <td class="px-6 py-4">
                             <form action="{% url 'tours:update_tour_status' tour.id %}" method="post" class="flex items-center gap-2">

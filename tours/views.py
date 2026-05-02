@@ -41,7 +41,11 @@ def driver_dashboard(request):
 @user_passes_test(is_admin, login_url='/')
 def admin_dashboard(request):
     tours = Tour.objects.all().order_by('-pickup_time')
-    return render(request, 'tours/admin_dashboard.html', {'tours': tours})
+    drivers = User.objects.filter(user_type='driver')
+    return render(request, 'tours/admin_dashboard.html', {
+        'tours': tours,
+        'drivers': drivers
+    })
 
 @login_required
 @user_passes_test(is_dispatcher, login_url='/')
