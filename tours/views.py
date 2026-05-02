@@ -42,9 +42,26 @@ def driver_dashboard(request):
 def admin_dashboard(request):
     tours = Tour.objects.all().order_by('-pickup_time')
     drivers = User.objects.filter(user_type='driver')
+    
+    drivers_count = drivers.count()
+    total_count = tours.count()
+    pending_count = tours.filter(status='pending').count()
+    assigned_count = tours.filter(status='assigned').count()
+    completed_count = tours.filter(status='completed').count()
+    
+    def get_percent(count):
+        return (count / total_count * 100) if total_count > 0 else 0
+    
     return render(request, 'tours/admin_dashboard.html', {
         'tours': tours,
-        'drivers': drivers
+        'drivers': drivers,
+        'drivers_count': drivers_count,
+        'pending_tours_count': pending_count,
+        'assigned_tours_count': assigned_count,
+        'completed_tours_count': completed_count,
+        'pending_pct': get_percent(pending_count),
+        'assigned_pct': get_percent(assigned_count),
+        'completed_pct': get_percent(completed_count),
     })
 
 @login_required
@@ -99,5 +116,7 @@ def update_tour_status(request, tour_id):
         new_status=request.POST.get('status')
         if new_status in dict(Tour.STATUS_CHOICES):
             tour.status=new_status
+            if new_status == 'pending':
+                tour.driver = None
             tour.save()
     return redirect('tours:admin_dashboard')

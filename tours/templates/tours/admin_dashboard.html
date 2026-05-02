@@ -8,13 +8,46 @@
             <p class="text-gray-500 mt-1">Global overview of all transport movements and assignments.</p>
         </div>
         <div class="flex gap-4">
-            <div class="bg-white px-4 py-2 rounded-lg border border-gray-100 shadow-sm">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Total Tours</span>
-                <span class="text-xl font-bold">{{ tours.count }}</span>
+            <div class="bg-white px-4 py-2 rounded-lg border-l-4 border-amber-500 shadow-sm min-w-[120px]">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Pending</span>
+                <span class="text-xl font-bold text-amber-600">{{ pending_tours_count|default:0 }}</span>
             </div>
-            <div class="bg-white px-4 py-2 rounded-lg border border-gray-100 shadow-sm">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Active Drivers</span>
-                <span class="text-xl font-bold">{{ drivers_count|default:"4" }}</span>
+            <div class="bg-white px-4 py-2 rounded-lg border-l-4 border-blue-500 shadow-sm min-w-[120px]">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Assigned</span>
+                <span class="text-xl font-bold text-blue-600">{{ assigned_tours_count|default:0 }}</span>
+            </div>
+            <div class="bg-white px-4 py-2 rounded-lg border-l-4 border-green-500 shadow-sm min-w-[120px]">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">Completed</span>
+                <span class="text-xl font-bold text-green-600">{{ completed_tours_count|default:0 }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Distribution Bar -->
+    <div class="mb-8 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500">Fleet Status Distribution</h3>
+            <span class="text-[10px] font-mono text-gray-400">{{ tours.count }} Total Operations</span>
+        </div>
+        
+        <div class="h-3 w-full bg-gray-100 rounded-full flex overflow-hidden">
+            <div style="width: {{ pending_pct }}%" class="bg-amber-500 h-full transition-all duration-1000" title="Pending"></div>
+            <div style="width: {{ assigned_pct }}%" class="bg-blue-500 h-full transition-all duration-1000" title="Assigned"></div>
+            <div style="width: {{ completed_pct }}%" class="bg-green-500 h-full transition-all duration-1000" title="Completed"></div>
+        </div>
+        
+        <div class="flex gap-6 mt-4">
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-amber-500"></div>
+                <span class="text-[10px] font-medium text-gray-500 uppercase">{{ pending_pct|floatformat:0 }}% Pending</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                <span class="text-[10px] font-medium text-gray-500 uppercase">{{ assigned_pct|floatformat:0 }}% Assigned</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                <span class="text-[10px] font-medium text-gray-500 uppercase">{{ completed_pct|floatformat:0 }}% Completed</span>
             </div>
         </div>
     </div>
