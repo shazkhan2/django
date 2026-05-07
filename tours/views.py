@@ -40,9 +40,20 @@ def driver_dashboard(request):
 @login_required
 @user_passes_test(is_admin, login_url='/')
 def admin_dashboard(request):
-    tours = Tour.objects.all().order_by('-pickup_time')
+    sort_by = request.GET.get('sort', 'pickup_time')
+    sort_map = {
+        'passenger': 'passenger_name',
+        '-passenger': '-passenger_name',
+        'time': 'pickup_time',
+        '-time': '-pickup_time',      
+        'status': 'status',
+        '-status': '-status',
+        'driver': 'driver__username',
+        '-driver': '-driver__username',
+    }
+    order_field = sort_map.get(sort_by, '-pickup_time')
+    tours = Tour.objects.all().order_by(order_field)
     drivers = User.objects.filter(user_type='driver')
-    
     drivers_count = drivers.count()
     total_count = tours.count()
     pending_count = tours.filter(status='pending').count()
