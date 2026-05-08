@@ -23,7 +23,7 @@ def index(request):
         return redirect('tours:dispatcher_dashboard')
     if request.user.user_type == 'driver':
         return redirect('tours:driver_dashboard')
-    return render(request, 'tours/index.html')
+    return render(request, 'users/index.html')
 
 @login_required
 @user_passes_test(is_dispatcher, login_url='/')
@@ -125,6 +125,9 @@ def update_tour_status(request, tour_id):
     tour=get_object_or_404(Tour, id=tour_id)
     if request.method=="POST":
         new_status=request.POST.get('status')
+        # if new_status == 'deleted':
+        #     tour.delete()
+        #     return redirect('tours:admin_dashboard')
         if new_status in dict(Tour.STATUS_CHOICES):
             tour.status=new_status
             if new_status == 'pending':

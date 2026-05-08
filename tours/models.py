@@ -8,6 +8,8 @@ class Tour(models.Model):
         ('pending', 'Pending'),
         ('assigned', 'Assigned'),
         ('completed', 'Completed'),
+        # ('deleted', 'Deleted'),
+
     )
     created_by = models.ForeignKey(
         User,
