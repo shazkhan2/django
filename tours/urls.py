@@ -13,4 +13,6 @@ urlpatterns = [
     path('update-status/<int:tour_id>/', views.update_tour_status, name='update_tour_status'),
     path('driver/complete/<int:tour_id>/', views.complete_tour, name='complete_tour'),
     path('delete/<int:tour_id>/', views.delete_tour, name='delete_tour'),
+    path('history/', views.history, name='history'),
+
 ]

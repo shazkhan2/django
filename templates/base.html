@@ -25,7 +25,7 @@
             
             <div class="hidden md:flex items-center gap-6">
                 <a href="{% url 'tours:index' %}" class="text-sm font-medium hover:text-blue-400 transition-colors">Dashboard</a>
-                <a href="#" class="text-sm font-medium hover:text-blue-400 transition-colors">History</a>
+                <a href="{% url 'tours:history' %}" class="text-sm font-medium hover:text-blue-400 transition-colors">History</a>
                 <a href="#" class="text-sm font-medium hover:text-blue-400 transition-colors">Profile</a>
                 <a href="{% url 'logout_user' %}" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-md text-xs font-bold transition-all">SIGN OUT</a>
             </div>

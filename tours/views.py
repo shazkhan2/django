@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Tour
 from .forms import TourForm
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+from django.db.models import Q
 
 User = get_user_model()
 
@@ -52,7 +54,13 @@ def admin_dashboard(request):
         '-driver': '-driver__username',
     }
     order_field = sort_map.get(sort_by, '-pickup_time')
-    tours = Tour.objects.all().order_by(order_field)
+    today= timezone.now().date()
+    tours_query = Tour.objects.filter(
+        Q(status__in=['pending', 'assigned']) |
+        Q(status = 'completed', pickup_time__date=today)
+          )
+
+    tours = tours_query.order_by(order_field)
     drivers = User.objects.filter(user_type='driver')
     drivers_count = drivers.count()
     total_count = tours.count()
@@ -125,12 +133,17 @@ def update_tour_status(request, tour_id):
     tour=get_object_or_404(Tour, id=tour_id)
     if request.method=="POST":
         new_status=request.POST.get('status')
-        # if new_status == 'deleted':
-        #     tour.delete()
-        #     return redirect('tours:admin_dashboard')
         if new_status in dict(Tour.STATUS_CHOICES):
             tour.status=new_status
             if new_status == 'pending':
                 tour.driver = None
             tour.save()
     return redirect('tours:admin_dashboard')
+
+@login_required
+@user_passes_test(is_admin, login_url='/')
+def history(request):
+    today= timezone.now().date()
+    tours = Tour.objects.filter(status='completed').exclude(pickup_time__date=today).order_by('-pickup_time')
+    
+    return render(request, 'tours/history.html', {'tours': tours})
